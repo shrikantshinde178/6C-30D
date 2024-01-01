@@ -22,7 +22,7 @@
 // 2 <= uniqueCnt1 + uniqueCnt2 <= 109
 
 //Solution 
-class Solution {
+class MinimizeSet {
     // Function to calculate the greatest common divisor 
     int gcd(int a, int b) {
         return b == 0 ? a : gcd(b, a % b);
