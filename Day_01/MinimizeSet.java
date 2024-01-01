@@ -21,48 +21,39 @@
 // 1 <= uniqueCnt1, uniqueCnt2 < 109
 // 2 <= uniqueCnt1 + uniqueCnt2 <= 109
 
-
 //Solution 
 class Solution {
+    // Function to calculate the greatest common divisor 
+    int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
+
     // Function to find the minimum maximum value
     public int minimizeSet(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2) {
-        // Initialize the maximum possible value
-        int maxPossibleValue = Integer.MAX_VALUE;
+        // Initialize variables for binary search
+        long l = 1, r = (int) (2 * 1e9);
+        long ans = r;
 
-        // Iterate through possible values
-        for (int i = 1; i <= Integer.MAX_VALUE; i++) {
-            // Check if the current value satisfies the conditions
-            if (isValid(divisor1, divisor2, uniqueCnt1, uniqueCnt2, i)) {
-                // Update the maximum possible value
-                maxPossibleValue = i;
+        // Calculate the least common multiple of divisor1 and divisor2
+        long lcm = (1L * divisor1 * divisor2) / gcd(divisor1, divisor2);
+
+        // Binary search loop to find the minimum maximum value
+        for (; l <= r;) {
+            long mid = (l + r) >> 1;  // Calculate the midpoint
+            long x = mid - mid / divisor1;  // Count of numbers not divisible by divisor1
+            long y = mid - mid / divisor2;  // Count of numbers not divisible by divisor2
+            long z = mid - mid / lcm;  // Count of numbers not divisible by the least common multiple
+
+            // Check if the counts satisfy the conditions
+            if (x < 1L * uniqueCnt1 || y < 1L * uniqueCnt2 || z < 1L * (uniqueCnt1 + uniqueCnt2)) {
+                l = mid + 1;  // Adjust the search range
             } else {
-                break;
+                ans = Math.min(ans, mid);  // Update the minimum maximum value
+                r = mid - 1;  // Adjust the search range
             }
         }
 
-        // Return the minimum maximum value
-        return maxPossibleValue;
-    }
-
-    // Function to check if a value satisfies the conditions
-    private boolean isValid(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2, int maxPossibleValue) {
-        // Counters for the number of elements added to each array
-        int count1 = 0, count2 = 0;
-
-        // Iterate up to the current maximum possible value
-        for (int i = 1; i <= maxPossibleValue; i++) {
-            // Check if the element is not divisible by divisor1 and the count is less than uniqueCnt1
-            if (i % divisor1 != 0 && count1 < uniqueCnt1) {
-                count1++;
-            }
-            // Check if the element is not divisible by divisor2 and the count is less than uniqueCnt2
-            else if (i % divisor2 != 0 && count2 < uniqueCnt2) {
-                count2++;
-            }
-        }
-
-        // Check if both arrays meet the required counts
-        return count1 == uniqueCnt1 && count2 == uniqueCnt2;
+        // Return the minimum maximum value as an integer
+        return (int) ans;
     }
 }
-
