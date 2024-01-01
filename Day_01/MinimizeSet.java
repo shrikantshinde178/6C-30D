@@ -23,21 +23,19 @@
 
 
 //Solution 
-import java.util.*;
-import java.lang.*;
-import java.lang.Math;
-
 class Solution {
+    // Function to find the minimum maximum value
     public int minimizeSet(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2) {
         // Initialize the maximum possible value
         int maxPossibleValue = Integer.MAX_VALUE;
 
-        // Iterate over possible values
+        // Iterate through possible values
         for (int i = 1; i <= Integer.MAX_VALUE; i++) {
-            // Check if it's possible to create arrays with the given conditions
-            if (isPossible(divisor1, divisor2, uniqueCnt1, uniqueCnt2, i)) {
+            // Check if the current value satisfies the conditions
+            if (isValid(divisor1, divisor2, uniqueCnt1, uniqueCnt2, i)) {
                 // Update the maximum possible value
                 maxPossibleValue = i;
+            } else {
                 break;
             }
         }
@@ -46,22 +44,25 @@ class Solution {
         return maxPossibleValue;
     }
 
-    // Helper method 
-    private boolean isPossible(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2, int maxPossibleValue) {
+    // Function to check if a value satisfies the conditions
+    private boolean isValid(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2, int maxPossibleValue) {
         // Counters for the number of elements added to each array
         int count1 = 0, count2 = 0;
 
-        // Iterate up to the maximum possible value
+        // Iterate up to the current maximum possible value
         for (int i = 1; i <= maxPossibleValue; i++) {
+            // Check if the element is not divisible by divisor1 and the count is less than uniqueCnt1
             if (i % divisor1 != 0 && count1 < uniqueCnt1) {
                 count1++;
             }
+            // Check if the element is not divisible by divisor2 and the count is less than uniqueCnt2
             else if (i % divisor2 != 0 && count2 < uniqueCnt2) {
                 count2++;
             }
         }
 
-        // Check required counts
+        // Check if both arrays meet the required counts
         return count1 == uniqueCnt1 && count2 == uniqueCnt2;
     }
 }
+
