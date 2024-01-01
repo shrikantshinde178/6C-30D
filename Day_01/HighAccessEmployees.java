@@ -35,7 +35,7 @@
 //Solution
 import java.util.*;
 
-public class Solution {
+public class HighAccessEmployees {
     // Function to find high-access employees based on access times
     public List<String> findHighAccessEmployees(List<List<String>> access_times) {
         // Map to store access times for each employee
