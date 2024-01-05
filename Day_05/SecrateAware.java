@@ -30,7 +30,7 @@
 // 1 <= delay < forget <= n
 
 // Solution
-class Solution {
+class SecrateAware {
     public int peopleAwareOfSecret(int n, int delay, int forget) {
         long[][] dp = new long[n + forget][3];
         
