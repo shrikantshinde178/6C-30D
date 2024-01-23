@@ -43,7 +43,7 @@
  * This class provides a solution for finding the city with the minimum number of reachable cities within a given distance threshold,
  * using the Floyd Warshall algorithm for multi-source shortest paths.
  */
-public class Solution {
+public class SmallestThresholdDistance {
 
     /**
      * Finds the city with the minimum number of reachable cities within the specified distance threshold.
